@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    
+</head>
+
+<body>
+
+  <input type="text" class="Reticulocyte" placeholder="請輸入網狀紅血球數">
+  <input type="text" class="Hct" placeholder="請輸入Hct">
+  <input type="button" class="send" value="計算">
+  <p class="total">您的網狀紅血球指數為 
+   <span class="HctIndex">0</span>，狀態是 <span class="status"></span></p>
+
+</body>
+
+
+<script>
+   
+    var sendObject = document.querySelector(".send");
+    sendObject.addEventListener("click", calcHct);
+    
+
+    var Reticulocyte = document.querySelector(".Reticulocyte").value;
+    alert(Reticulocyte);
+
+    function calcHct() {
+      var Reticulocyte = document.querySelector(".Reticulocyte").value;
+      var Hct = document.querySelector(".Hct").value;
+      var HctIndex = document.querySelector(".HctIndex");
+      var statusObject = document.querySelector(".status");
+      
+      if (Reticulocyte > 0 && Hct > 0 ) {
+
+          var maturationFactor = '';
+          if (Hct = 0.45){
+            maturationFactor = 1
+          }
+          else if (Hct = 0.35){
+            maturationFactor = 1.5
+          }
+          else if (Hct = 0.25){
+            maturationFactor = 2
+          }
+          else if (Hct = 0.2){
+            maturationFactor = 2.5
+          }
+
+          
+          var RI = (Reticulocyte * (Hct/0.45))/maturationFactor;
+          RI = RI.toFixed(2);
+          HctIndex.innerText = RI;
+      } else {
+          HctIndex.innerText ="輸入資料錯誤"
+      };
+      statusObject.innerText = checkStstus(RI);
+    }
+    
+    function checkStstus(RI) {
+      switch (true) {
+        case RI >= 0.02:
+          return `足夠的骨隨反應`;
+          break;
+        case RI < 0.02:
+          return `血球增生不足`;
+          break;
+        
+      }
+    }
+      
+    </script>
+
+</html>
